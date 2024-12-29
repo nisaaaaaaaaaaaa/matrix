@@ -1,99 +1,143 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bienvenue dans la Matrice</title>
+    <title>Bienvenue dans la Matrix</title>
     <style>
-        /* Style global */
         body {
             margin: 0;
-            padding: 0;
-            font-family: 'Courier New', Courier, monospace;
-            background-color: #000; /* Fond noir */
-            color: #0f0; /* Texte vert néon */
-            overflow: hidden; /* Désactiver le scroll */
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            background: black;
+            overflow: hidden;
+            color: #00ff00;
+            font-family: "Courier New", Courier, monospace;
         }
 
-        h1 {
+        .matrix {
             position: absolute;
-            top: 40%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 3rem;
-            text-shadow: 0 0 10px #0f0, 0 0 20px #0f0, 0 0 30px #0f0;
-            z-index: 10;
-            white-space: nowrap;
-        }
-
-        p {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 1.5rem;
-            text-shadow: 0 0 10px #0f0, 0 0 20px #0f0;
-            z-index: 10;
-            white-space: nowrap;
-        }
-
-        /* Effet Matrix */
-        canvas {
-            position: fixed;
             top: 0;
             left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        canvas {
+            display: block;
+        }
+
+        .welcome {
+            z-index: 10;
+            text-align: center;
+        }
+
+        .welcome h1 {
+            margin: 0;
+            font-size: 3em;
+        }
+
+        .welcome button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background: #00ff00;
+            border: none;
+            color: black;
+            font-size: 1.2em;
+            cursor: pointer;
+        }
+
+        .welcome button:hover {
+            background: #00cc00;
         }
     </style>
 </head>
 <body>
-    <canvas id="matrix"></canvas>
-    <h1>Bienvenue dans la Matrice</h1>
-    <p>Préparez-vous pour une aventure unique.</p>
+    <div class="matrix">
+        <canvas id="matrixCanvas"></canvas>
+    </div>
+    <div class="welcome">
+        <h1>Bienvenue dans la Matrix</h1>
+        <button onclick="window.location.href='details.html';">Cliquez</button>
+    </div>
 
     <script>
-        // Canvas pour l'effet Matrix
-        const canvas = document.getElementById('matrix');
+        const canvas = document.getElementById('matrixCanvas');
         const ctx = canvas.getContext('2d');
 
-        // Taille du canvas
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
 
-        // Caractères Matrix
-        const matrixChars = "0123456789abcdefghijklmnopqrstuvwxyz";
+        const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
         const fontSize = 16;
         const columns = canvas.width / fontSize;
+        const drops = [];
 
-        // Position des gouttes (une par colonne)
-        const drops = Array(Math.floor(columns)).fill(0);
-
-        // Fonction de rendu
-        function drawMatrix() {
-            ctx.fillStyle = "rgba(0, 0, 0, 0.05)"; // Traînée noire transparente
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-            ctx.fillStyle = "#0f0"; // Texte vert néon
-            ctx.font = `${fontSize}px monospace`;
-
-            drops.forEach((y, x) => {
-                const text = matrixChars.charAt(Math.floor(Math.random() * matrixChars.length));
-                ctx.fillText(text, x * fontSize, y * fontSize);
-
-                if (y * fontSize > canvas.height && Math.random() > 0.975) {
-                    drops[x] = 0; // Réinitialisation de la goutte
-                }
-                drops[x]++;
-            });
+        for (let x = 0; x < columns; x++) {
+            drops[x] = 1;
         }
 
-        // Mise à jour du canvas toutes les 50ms
-        setInterval(drawMatrix, 50);
+        function draw() {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            ctx.fillStyle = '#0F0';
+            ctx.font = fontSize + 'px monospace';
 
-        // Ajuster la taille du canvas si la fenêtre est redimensionnée
-        window.addEventListener('resize', () => {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        });
+            for (let i = 0; i < drops.length; i++) {
+                const text = letters.charAt(Math.floor(Math.random() * letters.length));
+                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
+
+                drops[i]++;
+            }
+        }
+
+        setInterval(draw, 33);
     </script>
+</body>
+</html>
+
+<!-- Details page (details.html) -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Détails</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: black;
+            color: #00ff00;
+            font-family: "Courier New", Courier, monospace;
+        }
+
+        .details {
+            text-align: center;
+        }
+
+        .details h1 {
+            margin: 0;
+            font-size: 2.5em;
+        }
+    </style>
+</head>
+<body>
+    <div class="details">
+        <h1>18 janvier 2025, 12h</h1>
+        <p>1 rue des Vosges, 67850</p>
+    </div>
 </body>
 </html>
