@@ -3,141 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bienvenue dans la Matrix</title>
-    <style>
-        body {
-            margin: 0;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            background: black;
-            overflow: hidden;
-            color: #00ff00;
-            font-family: "Courier New", Courier, monospace;
-        }
-
-        .matrix {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-        }
-
-        canvas {
-            display: block;
-        }
-
-        .welcome {
-            z-index: 10;
-            text-align: center;
-        }
-
-        .welcome h1 {
-            margin: 0;
-            font-size: 3em;
-        }
-
-        .welcome button {
-            margin-top: 20px;
-            padding: 10px 20px;
-            background: #00ff00;
-            border: none;
-            color: black;
-            font-size: 1.2em;
-            cursor: pointer;
-        }
-
-        .welcome button:hover {
-            background: #00cc00;
-        }
-    </style>
+    <title>Matrix Inspired Website</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="matrix">
         <canvas id="matrixCanvas"></canvas>
+        <div class="welcome">
+            <h1>Bienvenue</h1>
+        </div>
     </div>
-    <div class="welcome">
-        <h1>Bienvenue dans la Matrix</h1>
-        <button onclick="window.location.href='details.html';">Cliquez</button>
-    </div>
-
-    <script>
-        const canvas = document.getElementById('matrixCanvas');
-        const ctx = canvas.getContext('2d');
-
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-
-        const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-        const fontSize = 16;
-        const columns = canvas.width / fontSize;
-        const drops = [];
-
-        for (let x = 0; x < columns; x++) {
-            drops[x] = 1;
-        }
-
-        function draw() {
-            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            
-            ctx.fillStyle = '#0F0';
-            ctx.font = fontSize + 'px monospace';
-
-            for (let i = 0; i < drops.length; i++) {
-                const text = letters.charAt(Math.floor(Math.random() * letters.length));
-                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-
-                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
-                    drops[i] = 0;
-                }
-
-                drops[i]++;
-            }
-        }
-
-        setInterval(draw, 33);
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
+/* Styles for Matrix Website */
+body, html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    font-family: 'Courier New', Courier, monospace;
+    background-color: black;
+    color: #00ff00;
+}
 
-<!-- Details page (details.html) -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Détails</title>
-    <style>
-        body {
-            margin: 0;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: black;
-            color: #00ff00;
-            font-family: "Courier New", Courier, monospace;
-        }
+.matrix {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
 
-        .details {
-            text-align: center;
-        }
+canvas {
+    display: block;
+}
 
-        .details h1 {
-            margin: 0;
-            font-size: 2.5em;
-        }
-    </style>
-</head>
-<body>
-    <div class="details">
-        <h1>18 janvier 2025, 12h</h1>
-        <p>1 rue des Vosges, 67850</p>
-    </div>
-</body>
-</html>
+.welcome {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: #00ff00;
+    font-size: 3rem;
+    font-weight: bold;
+    text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00;
+}
